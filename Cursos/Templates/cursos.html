@@ -1,0 +1,87 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include "base/curso_add.html" %}
+
+    {% for curso in cursos %}
+
+    <!-- Start Content -->
+                    {% if curso.disponibilidad == True %}
+
+                    <div class="col-md-4">
+                        <div class="card mb-4 product-wap rounded-0">
+                            <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="{{curso.imagen.url}}">
+                                <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
+                                    <ul class="list-unstyled">
+                                        <li><a class="btn btn-success text-white" href=""><i class="far fa-heart"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href=""><i class="far fa-eye"></i></a></li>
+                                        <li><a class="btn btn-success text-white mt-2" href=""><i class="fas fa-cart-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>  
+                            <div class="card-body">
+                                <a href="{% url 'curso_single' id=curso.codigo %}" class="h3 text-decoration-none">
+                                    <strong>{{curso.nombre_curso}}</strong> 
+                                </a>
+                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                    <li>
+                                        {{curso.descripcion}} 
+                                        <ul>
+                                            <li><strong>Catedratico:</strong>  {{curso.catedratico}} </li>
+                                            <li><strong>Horario:</strong>  {{curso.horario}}</li>
+                                            <li><strong>Codigo:</strong>  {{curso.codigo}}</li>
+                                        </ul>
+                                          
+                                    </li>
+                                    <li class="pt-2">
+                                        <span class="product-color-dot color-dot-red float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-blue float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-black float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-light float-left rounded-circle ml-1"></span>
+                                        <span class="product-color-dot color-dot-green float-left rounded-circle ml-1"></span>
+                                    </li>
+                                </ul>
+                                <ul class="list-unstyled d-flex justify-content-center mb-1">
+                                    <li>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-warning fa fa-star"></i>
+                                        <i class="text-muted fa fa-star"></i>
+                                    </li>
+                                </ul>
+                                <p class="text-center mb-0">Q{{curso.costo |stringformat:".2f"}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+    {% endfor %}
+                </div>
+                <div div="row">
+                    <ul class="pagination pagination-lg justify-content-end">
+                        <li class="page-item disabled">
+                            <a class="page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0" href="#" tabindex="-1">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="#">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link rounded-0 shadow-sm border-top-0 border-left-0 text-dark" href="#">3</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Content -->
+
+    <!-- Start Escuelas -->
+    {% include "base/escuelas.html" %}
+    <!--End Brands-->
+
+    <!-- End Featured Product -->
+    {% endblock %}

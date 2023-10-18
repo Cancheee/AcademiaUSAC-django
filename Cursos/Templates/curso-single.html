@@ -1,0 +1,89 @@
+{% extends "Base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <!-- Open Content -->
+    <section class="bg-light">
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img class="card-img img-fluid" src="{{curso.imagen.url}}"  alt="Card image cap" id="product-detail">
+                    </div>
+                    
+                </div>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2"><strong>{{curso.nombre_curso}}</strong></h1>
+                            <p class="h3 py-2">Q{{curso.costo |stringformat:".2f"}}</p>
+
+                            <h5>Descripcion del Curso:</h5>
+                            <p>{{curso.descripcion}}</p>
+
+                            <p><strong>Codigo: </strong>{{curso.codigo}}</p>
+                            <p><strong>Catedratico: </strong>{{curso.catedratico}}</p>      
+                            <p><strong>Horario: </strong>{{curso.horario}}</p>
+                            <p><strong>Cupo: </strong>{{curso.cupo}}</p> 
+
+                            <form action="" method="GET">
+                                <input type="hidden" name="product-title" value="Activewear">
+                                <div class="row pb-3">
+                                    <div class="col d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Entrar</button>
+                                    </div>
+                                    <div class="col d-grid" >       
+                                        <button type="submit" class="btn btn-success btn-lg" name="submit" href="{% url 'agregar' curso.id %}">Añadir al Carrito</button>              
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Content -->
+
+
+
+    {% endblock %}
+
+    <!-- Start Slider Script -->
+    <script src={% static 'assets/js/slick.min.js' %}></script>
+    <script>
+        $('#carousel-related-product').slick({
+            infinite: true,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 3,
+            dots: true,
+            responsive: [{
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 3
+                    }
+                }
+            ]
+        });
+    </script>
+    <!-- End Slider Script -->

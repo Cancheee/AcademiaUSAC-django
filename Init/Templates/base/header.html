@@ -1,0 +1,68 @@
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light shadow">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand text-success logo h1 align-self-center" href="{% url 'inicio' %}">
+                Academia USAC
+            </a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
+                <div class="flex-fill">
+                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'inicio' %}">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'cursos' %}">Cursos</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                                <!-- Si el usuario es miembro del personal, muestra el enlace al Panel de Administración y la opción para cerrar sesión -->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'admin:index' %}">Panel de Administración</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'cerrar-sesion' %}">Cerrar Sesión</a>
+                                </li>
+                            {% else %}
+                                <!-- Si el usuario no es miembro del personal, muestra su nombre de usuario y opción para cerrar sesión -->
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'inicio' %}">{{ user.username }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'cerrar-sesion' %}">Cerrar Sesión</a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <!-- Si el usuario no está autenticado, muestra la opción para iniciar sesión -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'inicio-sesion' %}">Iniciar Sesión</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            
+            
+                {% if user.is_authenticated and not user.is_staff%}
+                <div class="navbar align-self-center d-flex">
+                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
+                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
+                    </a>
+
+                
+                    {% else %}
+                    
+                    
+                    
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </nav>
+    <!-- Close Header -->

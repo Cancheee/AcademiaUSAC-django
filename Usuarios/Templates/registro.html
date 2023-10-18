@@ -1,0 +1,93 @@
+{% extends "Base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <!-- Start Content Page -->
+    <div class="container-fluid bg-light py-5">
+        <div class="col-md-6 m-auto text-center">
+            <h1 class="h1">Registro de Estudiantes</h1>
+            <p>
+                Introduzca sus datos verdaderos para un registro exitoso
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    Error al registrarse
+                </div>
+                {% endif %}
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                  </div>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+
+<!-- Start Registration Form -->
+<div class="container py-5">
+    <div class="row py-5">
+        <form action="{% url 'registro' %}" class="col-md-9 m-auto" method="POST" role="form">{% csrf_token %}
+            <div class="form-group mb-3">
+                <label for="nombre">Nombre <strong class="text-danger">*</strong></label>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" maxlength="30" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
+
+            </div>
+            <div class="form-group mb-3">
+                <label for="apellido">Apellido <strong class="text-danger">*</strong></label>
+                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" maxlength="30" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
+            </div>
+            <div class="form-group mb-3">
+                <label for="dpi">DPI <strong class="text-danger">*</strong></label>
+                <input type="text" class="form-control" id="dpi" name="dpi" placeholder="DPI"
+                inputmode="numeric" pattern="[0-9]*" maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+            </div>
+            <div class="form-group mb-3">
+                <label for="fecha_nacimiento">Fecha de Nacimiento <strong class="text-danger">*</strong></label>
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
+            </div>
+            <div class="form-group mb-3">
+                <label for="telefono">Teléfono <strong class="text-danger">*</strong></label>
+                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Teléfono"
+                inputmode="numeric" pattern="[0-9]*" maxlength="8" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+            </div>
+            <div class="form-group mb-3">
+                <label for="usuario">Nombre de Usuario (único) <strong class="text-danger">*</strong></label>
+                <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Nombre de Usuario" maxlength="10">
+            </div>
+            <div class="form-group mb-3">
+                <label for="correo">Dirección de Correo Electrónico <strong class="text-danger">*</strong></label>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="Correo Electrónico">
+            </div>
+            <div class="form-group mb-3">
+                <label for="contraseña">Contraseña <strong class="text-danger">*</strong></label>
+                <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Contraseña" maxlength="15">
+                <p> La contraseña debe incluir: 
+                    <ul style="font-size: 10px;">
+                        <li>8 caracteres</li>
+                        <li>1 mayúscula</li>
+                        <li>1 dígito</li>
+                        <li>1 símbolo</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="form-group mb-3">
+                <label for="confirm_password">Confirmación de Contraseña <strong class="text-danger">*</strong></label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirmación de Contraseña" maxlength="15">
+            </div>
+            <div class="form-group mb-3">
+                <label for="imagen">Foto de Perfil <strong class="text-danger">*</strong></label><br>
+                <input type="file" id="imagen" name="imagen"  />
+            </div>
+            <div class="row">
+                <div class="col text-end mt-2">
+                    <button type="submit" class="btn btn-success btn-lg px-3">Registrarse</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- End Registration Form -->
+
+
+{% endblock %}

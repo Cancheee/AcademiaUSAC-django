@@ -1,0 +1,36 @@
+{% extends "Base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <!-- Start Content Page -->
+    <div class="container-fluid bg-light py-5">
+        <div class="col-md-6 m-auto text-center">
+            <h1 class="h1">Mi perfil</h1>
+            <p>
+                Introduzca sus datos verdaderos para un registro exitoso
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    Error al registrarse
+                </div>
+                {% endif %}
+                {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                  </div>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+
+<!-- Start Registration Form -->
+<div class="container py-5">
+    <p>
+        Bienvenido
+    </p>
+</div>
+<!-- End Registration Form -->
+
+
+{% endblock %}

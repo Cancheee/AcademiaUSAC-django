@@ -1,0 +1,210 @@
+{% extends "Base.html" %}
+{% load static %}
+
+
+    {% block content %}
+    <!-- Start Banner Hero -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src="{% static './assets/img/1a7e1204d6b9ed44993cc68b3ee7695d.jpg' %}" alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left align-self-center">
+                                <h1 class="h1 text-success"> Academia <b>USAC</b></h1>
+                                <h3 class="h2">¿Que es?</h3>
+                                <p>
+                                    La “Academia USAC” es una institución que ofrece una amplia variedad de cursos
+                                    especializados en el área de ingeniería. Actualmente cuentan con un sistema no
+                                    muy convencional. Por ello, se requiere de sus servicios como ingeniero con
+                                    conocimientos en programación para que desarrolle una nueva aplicación en la que
+                                    se tenga un mejor control de los cursos en los que se inscriben los estudiantes.
+                                    Se requiere que el sistema pueda ser utilizado por el administradores,
+                                    profesores y estudiantes, esto implica que la solución deberá tener un diseño
+                                    agradable e intuitivo de acorde a los requerimientos de la academia. 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src={% static "./assets/img/robot.png" %} alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Distintintas modalidades</h1>
+                                <h3 class="h2">Distintintas modalidades</h3>
+                                <p>
+                                    Modalidades desde <strong>Presencial</strong> y <strong>Virtual</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="container">
+                    <div class="row p-5">
+                        <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                            <img class="img-fluid" src={% static "./assets/img/brazo.png" %}   alt="">
+                        </div>
+                        <div class="col-lg-6 mb-0 d-flex align-items-center">
+                            <div class="text-align-left">
+                                <h1 class="h1">Certificacion de Cursos</h1>
+                                <h3 class="h2">Certificacion de Cursos </h3>
+                                <p>
+                                    Certificacion de cursos para cv
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+        <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="next">
+            <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+    <!-- End Banner Hero -->
+
+
+    <!-- Start Categories of The Month -->
+    <section class="container py-5">
+        <div class="row text-center pt-3">
+            <div class="col-lg-6 m-auto">
+                <h1 class="h1">Cursos</h1>
+                <p>
+                    Cursos de todas las areas de ingeniería
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="#"><img src={% static "./assets/img/lenguaje-min.jpg" %}  class="rounded-circle img-fluid border"></a>
+                <h5 class="text-center mt-3 mb-3">Programacion</h5>
+                <p class="text-center"><a class="btn btn-success" href="{% url 'cursos' %}">Ir a Cursos</a></p>
+            </div>
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="#"><img src={% static "./assets/img/equipos-de-control-y-automatizacion.jpg" %}   class="rounded-circle img-fluid border"></a>
+                <h2 class="h5 text-center mt-3 mb-3">Electronica</h2>
+                <p class="text-center"><a class="btn btn-success" href="{% url 'cursos' %}">Ir a Cursos</a></p>
+            </div>
+            <div class="col-12 col-md-4 p-5 mt-3">
+                <a href="#"><img src={% static "./assets/img/automatizacion-y-control-suhissa.jpg" %}  class="rounded-circle img-fluid border"></a>
+                <h2 class="h5 text-center mt-3 mb-3">Automatización y Control</h2>
+                <p class="text-center"><a class="btn btn-success" href="{% url 'cursos' %}">Ir a Cursos</a></p>
+            </div>
+        </div>
+    </section>
+    <!-- End Categories of The Month -->
+
+
+    <!-- Start Featured Product -->
+    <section class="bg-light">
+        <div class="container py-5">
+            <div class="row text-center py-3">
+                <div class="col-lg-6 m-auto">
+                    <h1 class="h1">Cursos Destacados</h1>
+                    <p>
+                        Reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                        Excepteur sint occaecat cupidatat non proident.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100">
+                        <a href="{% url 'cursos' %}" >
+                            <img src={% static "./assets/img/DS.jpg" %}  class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <ul class="list-unstyled d-flex justify-content-between">
+                                <li>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-muted fa fa-star"></i>
+                                    <i class="text-muted fa fa-star"></i>
+                                </li>
+                                <li class="text-muted text-right">Q540.00</li>
+                            </ul>
+                            <a href="{% url 'cursos' %}"  class="h2 text-decoration-none text-dark">Ciencia de Datos y Análisis de Datos</a>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt in culpa qui officia deserunt.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100">
+                        <a href="{% url 'cursos' %}">
+                            <img src={% static "./assets/img/microprocesador2.jpg" %}  class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <ul class="list-unstyled d-flex justify-content-between">
+                                <li>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-muted fa fa-star"></i>
+                                    <i class="text-muted fa fa-star"></i>
+                                </li>
+                                <li class="text-muted text-right">Q480.00</li>
+                            </ul>
+                            <a href="{% url 'cursos' %}"  class="h2 text-decoration-none text-dark">Microcontroladores y Microprocesadores</a>
+                            <p class="card-text">
+                                Aenean gravida dignissim finibus. Nullam ipsum diam, posuere vitae pharetra sed, commodo ullamcorper.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 mb-4">
+                    <div class="card h-100">
+                        <a href="{% url 'cursos' %}">
+                            <img src={% static "./assets/img/equipos-de-control-y-automatizacion.jpg" %}  class="card-img-top" alt="...">
+                        </a>
+                        <div class="card-body">
+                            <ul class="list-unstyled d-flex justify-content-between">
+                                <li>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                    <i class="text-warning fa fa-star"></i>
+                                </li>
+                                <li class="text-muted text-right">Q360.00</li>
+                            </ul>
+                            <a href="{% url 'cursos' %}"  class="h2 text-decoration-none text-dark">Robótica Industrial</a>
+                            <p class="card-text">
+                                Curabitur ac mi sit amet diam luctus porta. Phasellus pulvinar sagittis diam, et scelerisque ipsum lobortis nec.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    <!-- Start Escuelas -->
+    {% include "base/escuelas.html" %}
+    <!--End Brands-->
+
+    </section>
+    <!-- End Featured Product -->
+    {% endblock %}
+
