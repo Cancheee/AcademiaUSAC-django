@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 import environ
+from decouple import config
 from django.contrib.messages import constants as msg_errors
 
 
@@ -30,8 +31,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'django-insecure-s7bauk$-1ikq$zai-09&6m&@0*o3v(@8+t$fzbx^s!+42n9_x4'
-#SECRET_KEY = env('SECRET_KEY')
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -57,13 +56,15 @@ INSTALLED_APPS = [
     'Usuarios',
     #Aplicaciones de Terceros
     'crispy_forms',
-    # 'axes',
+    'axes',
     'import_export',
 ]
 
-# AXES_FAILURE_LIMIT = 3  # Número de intentos fallidos antes de bloquear la cuenta
-# AXES_LOCK_OUT_AT_FAILURE = True  # Bloquear la cuenta después de superar el límite
-# AXES_COOLOFF_TIME = 1  # Duración del bloqueo en minutos
+
+
+AXES_FAILURE_LIMIT = 3  # Número de intentos fallidos antes de bloquear la cuenta
+AXES_LOCK_OUT_AT_FAILURE = False  # Deshabilita el bloqueo de la IP y solo bloquear la cuenta después de superar el límite
+AXES_COOLOFF_TIME = 1  # Duración del bloqueo en minutos
 
 
 
@@ -90,7 +91,7 @@ CRISPY_TEMPLATE_PACK='bootstrap4'
 
 AUTHENTICATION_BACKENDS = [
     # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
-    # 'axes.backends.AxesStandaloneBackend',
+    'axes.backends.AxesStandaloneBackend',
 
     # Django ModelBackend is the default authentication backend.
     'django.contrib.auth.backends.ModelBackend',
@@ -104,7 +105,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'axes.middleware.AxesMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'AcademiaUSAC.urls'
@@ -211,19 +212,18 @@ MESSAGE_TAGS={
 # LOGIN_REDIRECT_URL=''
 # LOGOUT_REDIRECT_URL=''
 
-EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST="smtp.gmail.com"
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "ingenieriausac8@gmail.com"
-EMAIL_HOST_PASSWORD = "Proyectofinal0980"
 
 EMAIL_BACKEND = env.str("EMAIL_BACKEND")
 EMAIL_HOST = env.str("EMAIL_HOST")
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
 EMAIL_PORT = env.int("EMAIL_PORT", default=587)
-EMAIL_HOST_USER = "ingenieriausac8@gmail.com"
-EMAIL_HOST_PASSWORD = "vjfktjfivuudxanu"    
+# EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+# EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")  
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+
+# EMAIL_HOST_USER = "ingenieriausac8@gmail.com"
+# EMAIL_HOST_PASSWORD = "vjfktjfivuudxanu"    
 
 
 

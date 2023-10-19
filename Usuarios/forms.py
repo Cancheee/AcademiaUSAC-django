@@ -1,39 +1,33 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Estudiantes
+from .models import Estudiantes 
 
 # Nuevo
-class EstudiantesForm(forms.ModelForm):
+
+class CustomUserCreationForm(UserCreationForm):
     class Meta:
-        model = Estudiantes
-        fields = '__all__'  # Esto incluirá todos los campos del modelo en el formulario
-
-        widgets={'birthdate': forms.DateInput(attrs={'type':'date'}),  
-         #         'contraseña': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
-        #         'contraseña': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
-        #         'password2': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña (Confirmacion)'})
-        }  
-
-class EstudianteRegistroForm(UserCreationForm):
-    class Meta:
-        model = Estudiantes
-        fields = ['nombre', 'apellido', 'fecha_nacimiento','dpi', 'telefono','imagen', 'usuario', 'correo','password1','correo',  ]
-
-class UserRegisterForm(UserCreationForm):
-    
-    first_name = forms.CharField(label='Nombre', min_length=3, max_length=15)  
-    last_name = forms.CharField(label='Apellido', min_length=3, max_length=15) 
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
+    telefono=forms.CharField(max_length=8)
+    fecha_nacimiento=forms.DateField()
     dpi = forms.IntegerField(label='DPI')
-    fecha_de_nacimiento=forms.DateField()
-    telefono=forms.CharField()
-    email=forms.EmailField()
-    password1=forms.CharField(label='Contraseña', widget=forms.PasswordInput)
-    password2=forms.CharField(label='Contraseña (Confirmacion)', widget=forms.PasswordInput)
-    
-    # profile_image = forms.ImageField(label='Foto de perfil')
+    profile_imagen = forms.ImageField(label='Foto de perfil', required=False)  # Cambia required a False
 
-    class Meta:
-        model=User
-        fields=['first_name', 'last_name','dpi', 'fecha_de_nacimiento', 'telefono','username','email','password1','password2']
-        # help_texts={k:"" for k in fields}
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Las contraseñas no coinciden.")
+        
+        return password2
+
+    def email_clean(self):
+        email = self.cleaned_data.get('email')
+        new = User.objects.filter(email=email)
+        if new.count():
+            raise ValidationError("El email ya está vinculado con otra cuenta, utiliza uno diferente.")
+        
+        return email

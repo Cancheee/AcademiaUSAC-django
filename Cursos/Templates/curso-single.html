@@ -18,8 +18,8 @@
                 <div class="col-lg-7 mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="h2"><strong>{{curso.nombre_curso}}</strong></h1>
-                            <p class="h3 py-2">Q{{curso.costo |stringformat:".2f"}}</p>
+                            <h1 class="h2"><strong>{{curso.nombre}}</strong></h1>
+                            <p class="h3 py-2">Q{{curso.precio |stringformat:".2f"}}</p>
 
                             <h5>Descripcion del Curso:</h5>
                             <p>{{curso.descripcion}}</p>
@@ -35,8 +35,12 @@
                                     <div class="col d-grid">
                                         <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Entrar</button>
                                     </div>
-                                    <div class="col d-grid" >       
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" href="{% url 'agregar' curso.id %}">Añadir al Carrito</button>              
+                                    <div class="col d-grid" >     
+                                        {% if user.is_authenticated %}                                            
+                                        <button type="submit" class="btn btn-success btn-lg" name="submit" href="{% url 'agregar' curso.id %}">Añadir al Carrito</button>  
+                                        {% else %}
+                                        <button type="submit" class="btn btn-success btn-lg" name="submit" href="{% url 'inicio-sesion' %}">Inicia sesion para añadir al carrito</button>  
+                                        {% endif %}            
                                     </div>
                                 </div>
                             </form>

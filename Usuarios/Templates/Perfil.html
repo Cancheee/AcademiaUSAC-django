@@ -3,34 +3,114 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-    <!-- Start Content Page -->
-    <div class="container-fluid bg-light py-5">
-        <div class="col-md-6 m-auto text-center">
-            <h1 class="h1">Mi perfil</h1>
-            <p>
-                Introduzca sus datos verdaderos para un registro exitoso
-                {% if form.errors %}
-                <div class="alert alert-danger" role="alert">
-                    Error al registrarse
-                </div>
-                {% endif %}
-                {% if error %}
-                <div class="alert alert-danger" role="alert">
-                    {{ error }}
-                  </div>
-                {% endif %}
-            </p>
-        </div>
+<div class="container-fluid bg-light py-5">
+    <div class="col-md-6 m-auto text-center">
+        <h1 class="h1">{{user.username}}</h1>
     </div>
-
-
-<!-- Start Registration Form -->
-<div class="container py-5">
-    <p>
-        Bienvenido
-    </p>
 </div>
 <!-- End Registration Form -->
+<section class="vh-100" >
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col col-lg-6 mb-4 mb-lg-0">
+      <div class="card mb-3" style="border-radius: .5rem;">
+      <div class="row g-0">
+        <div class="col-md-4 gradient-custom text-center text-white"
+        style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+          {% for listado_usuarios in listado_usuarios%}
+          {% if listado_usuarios.user_id == user.id%}
+            <img src="{{user.imagen.url}}" alt="Avatar" class="img-fluid my-5" style="width: 80px;">
+          {% else %}
+            <!--<img src="/media/users_pictures/default.png" alt="Avatar" class="img-fluid my-5" style="width: 80px;">-->
+          {% endif %}
+          {% endfor%}
+        <h5>{{user.username}}</h5>
+        </div>
+        <div class="col-md-8">
+        <div class="card-body p-4">
+          <h6>Información</h6>
+          <hr class="mt-0 mb-4">
+          <div class="row pt-1">
+          <div class="col-6 mb-3">
+            <h6>Nombres</h6>
+            <p class="text-muted">{{user.first_name}}</p>
+          </div>
+          <div class="col-6 mb-3">
+            <h6>Apellidos</h6>
+            <p class="text-muted">{{user.last_name}}</p>
+          </div>
+          </div>
+          <!--<h6>Projects</h6>-->
+          <!--<hr class="mt-0 mb-4">-->
+          <div class="row pt-1">
+          <div class="col-8 mb-3">
+            <h6>Email</h6>
+            <p class="text-muted">{{user.email}}</p>
+          </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  </section>
 
 
+  <br>
+	<div class=" col text-center">
+		<h1 style="text-align: center;">Resumen de Compras</h1>
+		<a class="primary-btn center" href="#">Resumen de compras en PDF</a>
+	</div>
+	        <!--================Cart Area =================-->
+			<section class="cart_area">
+				<div class="container">
+					<div class="cart_inner">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th scope="col">No. de asignacion</th>
+										<th scope="col">Curso</th>
+										<th scope="col">Cupo</th>
+										<th scope="col">Fecha de asignacion</th>
+									</tr>
+								</thead>
+								<tbody>                                
+	
+										{% for cursos_asignados in cursos_asignados %}
+											{% if cursos_asignados.user_id == user.id%}
+											<!--================Inicio Producto Individual =================-->
+											<tr>
+												<td>
+													<h5>{{cursos_asignados.curso_id}}</h5>	
+												</td>
+												<td>
+													{% for listado_todas_asignaciones in listado_todas_asignaciones %}
+														{% if cursos_asignados.curso_id == listado_todas_asignaciones.id%}
+														<h5>{{listado_todas_asignaciones.nombre}}</h5>
+														{% endif %}
+													{% endfor %}
+												</td>
+
+												<td>
+													<h5>{{cursos_asignados.cupo}}</h5>
+												</td>
+												
+                        <td>
+													<h5>{{cursos_asignados.created_at.date}}</h5>
+												</td>
+												
+											</tr>
+											<!--================Fin Producto Individual =================-->
+											{% endif %}
+										{% endfor %}
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</section>
 {% endblock %}

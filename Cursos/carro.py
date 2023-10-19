@@ -5,41 +5,38 @@ class Carro:
         carro=self.session.get('carro')
         if not carro:
             carro=self.session['carro']={}
-        else:
-            self.carro=carro
+        # else:
+        self.carro=carro
 
-    def agregar(self, producto):
-        if(str(producto.id) not in self.carro.keys()):
-            self.carro[producto.id]={
-                'producto_id':producto.id,
-                'nombre':producto.nombre,
-                'precio':str(producto.costo) ,
-                'cantidad':1,
-                'imagen':producto.imagen.url,
+    def agregar(self, curso):
+        if(str(curso.id) not in self.carro.keys()):
+            self.carro[curso.id]={
+                'curso_id':curso.id,
+                'nombre':curso.nombre,
+                'precio':str(curso.precio),
+                'cupo':1,
+                'imagen':curso.imagen.url,
+                'codigo':curso.codigo,
+                
             }
-        else:
-            for key, value in self.carro.items():
-                if key ==str(producto.id):
-                    value["cantidad"]=value["cantidad"]+1
-                    break
         self.guardar_carro()
 
     def guardar_carro(self):
         self.session["carro"]=self.carro
         self.session.modified = True
     
-    def eliminar(self, producto):
-        producto.id = str(producto.id)
-        if producto.id in self.carro:
-            del self.carro[producto.id]
+    def eliminar(self, curso):
+        curso.id = str(curso.id)
+        if curso.id in self.carro:
+            del self.carro[curso.id]
             self.guardar_carro()
         
-    def restar_cupo(self, producto):
+    def restar(self, curso):
         for key, value in self.carro.items():
-                if key ==str(producto.id):
-                    value["cantidad"]=value["cantidad"]-1
-                    if value["cantidad"]<1:
-                        self.eliminar(producto)
+                if key ==str(curso.id):
+                    value["cupo"]=value["cupo"]-1
+                    if value["cupo"]<1:
+                        self.eliminar(curso)
                     break
         self.guardar_carro()
 

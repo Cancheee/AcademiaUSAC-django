@@ -3,15 +3,15 @@ from django.contrib import admin
 from django.urls import path, include
 from Usuarios import views
 from django.contrib.auth import views as auth_views
-# from Usuarios.views import Registro
+from Usuarios.views import Registro
 
 urlpatterns = [
     path('', views.iniciar_sesion, name="inicio-sesion"),
-    # path('registro', Registro.as_view(), name='registro'),
+    path('registro', Registro.as_view(), name='registro'),
     path('cerrar_sesion', views.cerrar_sesion, name='cerrar-sesion'),
-    path('registro/', views.registro , name="registro"),
+    # path('registro/', views.registro , name="registro"),
     path('registro-exitoso/', views.registro_exitoso , name="registro_exitoso"),
-    # path('perfil/', views.perfil , name="perfil"),
+    path('perfil/', views.perfil , name="perfil"),
     path('accounts/', include('django.contrib.auth.urls')),
     # Añadidos
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="ResetPassword/password_reset.html"), name="reset_password"),

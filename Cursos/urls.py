@@ -12,10 +12,13 @@ urlpatterns = [
     path('curso-single/<int:id>', views.curso_single, name="curso_single"),
 
     #Carrito
-    path('carro/agregar/<int:id>', views.agregar_curso, name="agregar"),
-    path('carro/restar/<int:id>', views.restar_curso, name="restar"),
-    path('carro/eliminar/<int:id>', views.eliminar_curso, name="eliminar"),
-    path('carro/limpiar/<int:id>', views.limpiar_carro, name="limpiar"),
+    path('carrito', views.carrito, name="carrito"),
+    path('carrito/agregar/<int:curso_id>', views.agregar_curso, name="agregar"),
+    path("carrito/restar/<int:curso_id>/", views.restar_curso, name="restar"),
+    path('carrito/eliminar/<int:curso_id>', views.eliminar_curso, name="eliminar"),
+    path('carrito/limpiar/<int:curso_id>', views.limpiar_carro, name="limpiar"),
+    #Procesar asignacion
+    path('asignacion', views.procesar_asignacion, name="procesar_asignacion"),
 ]
 
 

@@ -2,8 +2,14 @@
 {% load static %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
 
+
+{% if request.user.is_authenticated %}
+<div class="container-fluid bg-light py-5">
+    <div class="col-md-6 m-auto text-center">
+        <h1 class="h1">Carrito de Compras</h1>
+    </div>
+</div>
 <!--================Cart Area =================-->
 <section class="cart_area">
     <div class="container">
@@ -11,11 +17,10 @@
             <div class="table-responsive">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Precio unitario</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Subotal</th>
+                        <tr><th scope="col">Codigo</th>
+                            <th scope="col">Curso</th>
+                            <th scope="col"></th>
+                            <th scope="col">Precio</th>
                         </tr>
                     </thead>
                     <tbody>                                
@@ -25,39 +30,33 @@
 
                             <!--================Inicio Producto Individual =================-->
                             <tr>
+                               
+
+                                <td>
+                                    <p>  {{value.codigo}}</p>
+                                </td>
+                                <td>
+                                    <p>  {{value.nombre}}</p>
+                                </td>
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="{{value.imagen}}" alt="" style="width: 50px; ">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>{{value.nombre}}</p>
-                                        </div>
+                                            <img src="{{value.imagen}}" alt="" style="width: 200px; ">
                                     </div>
                                 </td>
+
+ 
                                 <td>
                                     <h5>Q{{value.precio }}</h5>
                                 </td>
                                 <td>
                                     <div class="product_count">
-                                        <input type="text" name="qty" id="sst" maxlength="12" value="{{value.cantidad}}" title="Quantity:"
-                                            class="input-text qty">
-                                        <form action="{%url 'carro:agregar' value.producto_id%}">
-                                            <button type="submit" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+
+                                        <form action="{% url 'eliminar' value.curso_id %}">
+                                            <a class="btn btn-success" href="{% url 'eliminar' value.curso_id %}">X</a>
+
                                         </form>
-                                        
-                                        {% if value.cantidad > 1%}
-                                            <form action="{%url 'carro:restar' value.producto_id%}">
-                                                <button type="submit" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
-                                            </form>
-                                        {% else %}
-                                            <button type="submit" class="reduced items-count" type="button" data-toggle="modal" data-target="#exampleModal"><i class="lnr lnr-chevron-down"></i></button>
-                                        {%endif%}
-                                        
                                     </div>
-                                </td>
-                                <td>
-                                    <h5>Q{{value.subtotal}}</h5>
                                 </td>
                             </tr>
                             <!--================Fin Producto Individual =================-->
@@ -76,7 +75,7 @@
                                         </div>
                                         <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-                                        <form action="{%url 'carro:restar' value.producto_id%}">
+                                        <form action="#">
                                             <button type="submit" type="button" class="btn btn-primary">Confirmar</button>
                                         </form>
                                         </div>
@@ -90,7 +89,7 @@
                             <tr>
                                 <td colspan="4">
                                     <div class="alert alert-danger text-center">
-                                        Sin productos en el carrito
+                                        Sin cursos
                                     </div>
                                 </td>
                             </tr>
@@ -98,75 +97,49 @@
 
 
                         <tr class="bottom_button">
+                            
                             <td>
-                                <a class="gray_btn" href="{% url 'Carrito' %}">Actualizar carrito</a>
+                                <a class="btn btn-success" href="{% url 'carrito' %}">Actualizar carrito</a>
                             </td>
                             <td>
-
                             </td>
                             <td>
-
                             </td>
                             <td>
-                                <div class="cupon_text d-flex align-items-center" style="float: right;">
-                                    <input type="text" placeholder="Código de cupón">
-                                    <a class="primary-btn" href="#">Aplicar</a>
-                                    <!--<a class="gray_btn" href="{% url 'Carrito' %}">Cancelar</a>-->
-                                </div>
                             </td>
                         </tr>
+
                         <tr>
                             <td>
-
                             </td>
                             <td>
-
                             </td>
                             <td>
                                 <h5>Total</h5>
                             </td>
                             <td>
-                                <h5>Q{{importe_total_carro}}</h5>
+                                <h5>Q{{importe_total_carro|stringformat:".1f"}}</h5>
                             </td>
                         </tr>
-                        <tr class="shipping_area">
-                            <td>
 
-                            </td>
-                            <td>
-
-                            </td>
-                            <td>
-                                <h5>Envio</h5>
-                            </td>
-                            <td>
-                                <div class="shipping_box">
-                                    <ul class="list">
-                                        <li class="active"><a>Gratis</a></li>
-                                    </ul>
-                                    
-                                </div>
-                            </td>
-                        </tr>
                         <tr class="out_button_area">
                             <td>
-
+                                <a class="btn btn-success"  href="{% url 'cursos' %}">Volver a cursos</a>
                             </td>
                             <td>
-
                             </td>
                             <td>
-
                             </td>
                             <td>
                                 <div class="checkout_btn_inner d-flex align-items-center" style="float: right;">
-                                    <a class="gray_btn" href="{% url 'Catalogo' %}">Volver a catálogo</a>
                                     {% if request.session.carro.items %}
-                                        <a class="primary-btn" href="{% url 'Checkout' %}">Pagar</a>
+                                    
+                                        <a class="btn btn-success"  href="{% url 'procesar_asignacion' %}">Asignarse</a>
                                     {% endif %}
                                 </div>
                             </td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>

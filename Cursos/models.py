@@ -1,17 +1,33 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from Usuarios.models import Catedraticos
+from django.db.models import F, Sum, FloatField
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
+# class CategoriaCurso(models.Model):
+#     nombre=models.CharField(max_length=50)
+#     created=models.DateTimeField(auto_now_add=True)
+#     updated=models.DateTimeField(auto_now_add=True)
+
+#     class Meta:
+#         verbose_name="Categoria Curso"
+#         verbose_name_plural="Categorias de Cursos"
+
+#     def __str__(self):  
+#         return self.nombre
+
+#--------------CURSOS------------------------------
 class Cursos(models.Model):
-    nombre_curso = models.CharField(max_length=70, null=False, verbose_name='Nombre del Curso')         # Nombre del Curso
+    nombre = models.CharField(max_length=70, null=False, verbose_name='Nombre del Curso')               # Nombre del Curso
+    codigo = models.IntegerField(null=False, unique=True, verbose_name='Codigo')  
     catedratico = models.ForeignKey(Catedraticos, on_delete=models.CASCADE, verbose_name='Catedratico')
-    #catedratico = models.CharField(max_length=30, null=False, verbose_name='Catedratico')              # Catedratico
-    codigo = models.IntegerField(null=False, unique=True, verbose_name='Codigo')                        # Codigo
     horario=models.CharField(max_length=16, null=False, verbose_name='Horario')                         # Horario
-    costo = models.FloatField(null=False, verbose_name='Costo')                                         # Costo
+    precio = models.FloatField(null=False, verbose_name='Precio')                                       # Precio
     descripcion = models.CharField(max_length=300)                                                      # Descripcion del curso
     imagen = models.ImageField(upload_to='Cursos/')                                                     # Imagen del Curso
-    cupo= models.IntegerField(null=False, default= 0)                                                   # Cupo
+    cupo_limite = models.PositiveIntegerField()
+    cupo_actual = models.PositiveIntegerField(default=0)                                                # Inicialmente, el cupo actual es 0                                                                                                   # Cupo
     disponibilidad = models.BooleanField(verbose_name='Disponibilidad')                                 # Disponibilidad de Cupo
     created = models.DateTimeField(auto_now_add=True)                                                   # Creacion
     update = models.DateTimeField(auto_now=True)                                                        # Modificacion
@@ -28,5 +44,45 @@ class Cursos(models.Model):
 
     def __str__(self):
         #return self.nombre_curso
-        return '%s %s / %s / %s / Q%s' %(self.codigo, self.nombre_curso, self.catedratico, self.horario, self.costo)
+        return '%s %s / %s / %s / Q%s' %(self.codigo, self.nombre   , self.catedratico, self.horario, self.precio)
  
+ #--------------ASIGNACIONES------------------------------
+class Asignaciones(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)
+    
+    @property
+    def total(self):
+        return self.LineaAsignacion_set.aggregate(
+                total=Sum(F("precio"),output_field=FloatField())
+        ) ['total']
+    
+    class Meta:
+        db_table = 'Asignaciones'
+        verbose_name='Asignacion'
+        verbose_name_plural = 'Asignaciones'
+        ordering=['id']
+
+class LineaAsignacion(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    curso=models.ForeignKey(Cursos, on_delete=models.CASCADE)
+    asignacion=models.ForeignKey(Asignaciones, on_delete=models.CASCADE)
+    cupo=models.IntegerField(default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.cupo}"
+    
+    @property
+    def total(self):
+        pass
+    class Meta:
+        db_table = 'LineaAsignaciones'
+        verbose_name='LineaAsignacion'
+        verbose_name_plural = 'LineaAsignaciones'
+        ordering=['id']
+
+
