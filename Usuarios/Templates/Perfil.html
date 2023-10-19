@@ -48,69 +48,29 @@
             <p class="text-muted">{{user.email}}</p>
           </div>
           </div>
+          
         </div>
         </div>
+        
       </div>
       </div>
+      <div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
+        <a class="btn btn-success" href="{% url 'asignaciones' %}">Resumen Asignaciones</a>
+      </div>
+      <br>
+      <div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
+        <a class="btn btn-success" href="{% url 'cursos_asignados' %}">Mis Cursos</a>
+
     </div>
     </div>
   </div>
   </section>
 
+<!-- Resto de tu código -->
 
-  <br>
-	<div class=" col text-center">
-		<h1 style="text-align: center;">Resumen de Compras</h1>
-		<a class="primary-btn center" href="#">Resumen de compras en PDF</a>
-	</div>
-	        <!--================Cart Area =================-->
-			<section class="cart_area">
-				<div class="container">
-					<div class="cart_inner">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th scope="col">No. de asignacion</th>
-										<th scope="col">Curso</th>
-										<th scope="col">Cupo</th>
-										<th scope="col">Fecha de asignacion</th>
-									</tr>
-								</thead>
-								<tbody>                                
-	
-										{% for cursos_asignados in cursos_asignados %}
-											{% if cursos_asignados.user_id == user.id%}
-											<!--================Inicio Producto Individual =================-->
-											<tr>
-												<td>
-													<h5>{{cursos_asignados.curso_id}}</h5>	
-												</td>
-												<td>
-													{% for listado_todas_asignaciones in listado_todas_asignaciones %}
-														{% if cursos_asignados.curso_id == listado_todas_asignaciones.id%}
-														<h5>{{listado_todas_asignaciones.nombre}}</h5>
-														{% endif %}
-													{% endfor %}
-												</td>
 
-												<td>
-													<h5>{{cursos_asignados.cupo}}</h5>
-												</td>
-												
-                        <td>
-													<h5>{{cursos_asignados.created_at.date}}</h5>
-												</td>
-												
-											</tr>
-											<!--================Fin Producto Individual =================-->
-											{% endif %}
-										{% endfor %}
 
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</section>
+<div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
+  ´<p> </p>
+</div>
 {% endblock %}

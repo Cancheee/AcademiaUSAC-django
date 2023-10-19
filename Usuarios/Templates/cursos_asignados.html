@@ -1,0 +1,60 @@
+{% extends "Base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container-fluid bg-light py-5">
+    <div class="col-md-6 m-auto text-center">
+        <h1 class="h1">Mis Cursos</h1>
+    </div>
+</div>
+<!-- End Registration Form -->
+
+{% for cursos_asignados in cursos_asignados %}
+{% if cursos_asignados.user_id == user.id%}
+<section class="vh-100" >
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col-lg-5 mt-5">
+                <div class="card mb-3">
+                    {% for listado_todas_asignaciones in listado_todas_asignaciones %}
+                    {% if cursos_asignados.curso_id == listado_todas_asignaciones.id%}
+                    <img class="card-img img-fluid" src="{{listado_todas_asignaciones.imagen.url}}"  alt="Card image cap" id="product-detail">
+                </div>
+                
+            </div>
+            <!-- col end -->
+            <div class="col-lg-7 mt-5">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h1 class="h2"><strong>{{listado_todas_asignaciones.nombre}}</strong></h1>
+                        
+                        <h5>Descripcion del Curso:</h5>
+                        <p>{{listado_todas_asignaciones.descripcion}}</p>
+
+                        <p><strong>Codigo: </strong>{{listado_todas_asignaciones.codigo}}</p>
+                        <p><strong>Catedratico: </strong>{{listado_todas_asignaciones.catedratico}}</p>      
+                        <p><strong>Horario: </strong>{{listado_todas_asignaciones.horario}}</p> 
+                        <a class="btn btn-success" href="{% url 'entrar' id=listado_todas_asignaciones.codigo %}">Entrar</a>
+                        {% endif %}
+                        {% endfor %}
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</section>
+
+<!-- Close Content -->
+
+
+
+<div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
+  ´<p> </p>
+</div>
+{% endblock %}

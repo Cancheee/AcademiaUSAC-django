@@ -12,6 +12,9 @@ urlpatterns = [
     # path('registro/', views.registro , name="registro"),
     path('registro-exitoso/', views.registro_exitoso , name="registro_exitoso"),
     path('perfil/', views.perfil , name="perfil"),
+    path('perfil/asignaciones/', views.resumen_asignaciones , name="asignaciones"),
+    path('perfil/miscursos/', views.miscursos , name="cursos_asignados"),
+    
     path('accounts/', include('django.contrib.auth.urls')),
     # Añadidos
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="ResetPassword/password_reset.html"), name="reset_password"),

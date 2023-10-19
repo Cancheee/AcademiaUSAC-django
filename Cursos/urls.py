@@ -10,7 +10,7 @@ urlpatterns = [
     path('', views.cursos_all, name="cursos"),
     #path('curso-single/', views.curso_single, name="curso_single"),
     path('curso-single/<int:id>', views.curso_single, name="curso_single"),
-
+    path('curso/<int:id>', views.curso_matriculado, name="entrar"),
     #Carrito
     path('carrito', views.carrito, name="carrito"),
     path('carrito/agregar/<int:curso_id>', views.agregar_curso, name="agregar"),

@@ -48,13 +48,23 @@ def registro_exitoso(request):
 
 @login_required
 def perfil(request):
+    return render(request, "perfil.html")
+
+@login_required
+def resumen_asignaciones(request):
     cursos_asignados = LineaAsignacion.objects.all()
     asignaciones = Asignaciones.objects.all()
     listado_todas_asignaciones = Cursos.objects.all()
     listado_estudiantes= Estudiantes.objects.all()
-    return render(request, "perfil.html", {"cursos_asignados":cursos_asignados, "listado_todas_asignaciones":listado_todas_asignaciones, 'listado_estudiantes': listado_estudiantes, 'asignaciones': asignaciones})
+    return render(request, "resumen_asignaciones.html", {"cursos_asignados":cursos_asignados, "listado_todas_asignaciones":listado_todas_asignaciones, 'listado_estudiantes': listado_estudiantes, 'asignaciones': asignaciones})
 
-
+@login_required
+def miscursos(request):
+    cursos_asignados = LineaAsignacion.objects.all()
+    asignaciones = Asignaciones.objects.all()
+    listado_todas_asignaciones = Cursos.objects.all()
+    listado_estudiantes= Estudiantes.objects.all()
+    return render(request, "cursos_asignados.html", {"cursos_asignados":cursos_asignados, "listado_todas_asignaciones":listado_todas_asignaciones, 'listado_estudiantes': listado_estudiantes, 'asignaciones': asignaciones})
 
 
 class Registro(View):

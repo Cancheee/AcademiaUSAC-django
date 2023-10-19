@@ -33,13 +33,23 @@
                                 <input type="hidden" name="product-title" value="Activewear">
                                 <div class="row pb-3">
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Entrar</button>
+                                        {% if user.is_authenticated %}  
+                                        <div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
+                                            <a class="btn btn-success" href="{% url 'entrar' id=curso.codigo %}">Entrar</a>
+                                        </div>    
+                                        {% else %}
+                                        <a class="btn btn-success" href="{% url 'inicio-sesion' %}">Inicia Sesion para entrar</a>
+                                        {% endif %}  
                                     </div>
                                     <div class="col d-grid" >     
-                                        {% if user.is_authenticated %}                                            
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" href="{% url 'agregar' curso.id %}">Añadir al Carrito</button>  
+                                        {% if user.is_authenticated %}  
+                                        <div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
+                                            <a class="btn btn-success" href="{% url 'agregar' curso.id %}">Añadir al Carrito</a>
+                                        </div>                                          
                                         {% else %}
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" href="{% url 'inicio-sesion' %}">Inicia sesion para añadir al carrito</button>  
+                                        <div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
+                                            <a class="btn btn-success" href="{% url 'inicio-sesion' %}">Inicia sesion para añadir al carrito</a>
+                                        </div>        
                                         {% endif %}            
                                     </div>
                                 </div>

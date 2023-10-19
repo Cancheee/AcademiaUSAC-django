@@ -22,6 +22,13 @@ def curso_single(request, id):
     
     return render(request, "curso-single.html", {'curso':curso})
 
+#-----Curso-matriculado-----------------------
+@login_required
+def curso_matriculado(request, id):
+    curso=Cursos.objects.get(codigo=id)
+    
+    return render(request, "curso_matriculado.html", {'curso':curso})
+
 #-------------CARRITO---------------------------------------
 @login_required(login_url="/inicio-sesion/")
 def carrito(request):
@@ -72,7 +79,7 @@ def procesar_asignacion(request):
     listado_todas_asignaciones = Cursos.objects.all()
     listado_estudiantes= Estudiantes.objects.all()
 
-    messages.success(request, "La asignacion se creado correctamente")
+    # messages.success(request, "La asignacion se creado correctamente")
 
     # Lista de cursos asignados (sustituye con los nombres reales de los cursos)
     cursos_asignados = ["Curso 1", "Curso 2", "Curso 3"]
@@ -91,7 +98,7 @@ def procesar_asignacion(request):
 
     send_mail(subject, message, email_from, recipient_list)
 
-    return redirect("perfil")
+    return redirect("asignaciones")
 
 def enviar_mail(**kwargs):
     asunto="Asignacion de cursos satisfactoria - AcademiaUSAC"
