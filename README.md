@@ -9,36 +9,7 @@ Se requiere que el sistema pueda ser utilizado por el administradores,
 profesores y estudiantes, esto implica que la solución deberá tener un diseño
 agradable e intuitivo de acorde a los requerimientos de la academia.
 
-### Requerimientos
 
-- Deben de existir al menos 4 roles dentro del servicio, un Administrado total,
-Administrador, Colaborador u Empleado y Cliente.
-
-- Además, toda la información deberá de estar encriptada para permitir
-mantener de forma íntegra el registro, además se deberá contar con un
-registro de intentos de inicio de sesión, que muestre el dispositivo, el usuario,
-la fecha y hora. Además de eso se deberá de tener un registro de facturación
-con correlativo único.
-
-- La página web deberá ser una tienda virtual, en la cual se muestre una foto
-del modelo, y el precio y además se deben de mostrar las tallas disponibles
-en inventario junto con los colores, para agregar artículos al carrito ser debe
-de iniciar sesión.
-
-- A la hora de iniciar sesión se debe de pedir usuario y contraseña y luego la
-autenticación de dos pasos, además si se ingresa más de 10 veces la
-contraseña el usuario se bloqueará y solo el administrador podrá
-desbloquearla en el caso de los administradores y en el caso de los clientes
-se les enviará un correo de restablecimiento de contraseña automático,
-también si el nombre de usuario no existe se debe sugerir registrarse. Para
-el registro se debe de pedir la dirección de la persona, su CUI, un nombre de
-usuario y una contraseña con las bases de una contraseña segura (un
-símbolo, números, letras mayúsculas, letras mayúsculas y al menos 12
-caracteres).
-
-- El sistema debe de desarrollarse en Python utilizando Django con
-Framework, PostgreSQL con gestor de base de datos, Docker como
-contenedor.
 
 ### Roles
 
