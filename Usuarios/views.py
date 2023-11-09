@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required 
 from django.contrib import messages
 from Usuarios.models import Estudiantes , Catedraticos
-from Cursos.models import Cursos, Asignaciones, LineaAsignacion
+from Cursos.models import Cursos, Asignaciones, Notas
 from Usuarios.forms import CustomUserCreationForm
 import hashlib
 from django.views.generic.edit import CreateView
@@ -48,11 +48,15 @@ def registro_exitoso(request):
 
 @login_required
 def perfil(request):
-    return render(request, "perfil.html")
+    cursos_asignados = Notas.objects.all()
+    asignaciones = Asignaciones.objects.all()
+    listado_todas_asignaciones = Cursos.objects.all()
+    listado_estudiantes= Estudiantes.objects.all()
+    return render(request, "perfil.html", {"cursos_asignados":cursos_asignados, "listado_todas_asignaciones":listado_todas_asignaciones, 'listado_estudiantes': listado_estudiantes, 'asignaciones': asignaciones})
 
 @login_required
 def resumen_asignaciones(request):
-    cursos_asignados = LineaAsignacion.objects.all()
+    cursos_asignados = Notas.objects.all()
     asignaciones = Asignaciones.objects.all()
     listado_todas_asignaciones = Cursos.objects.all()
     listado_estudiantes= Estudiantes.objects.all()
@@ -60,7 +64,7 @@ def resumen_asignaciones(request):
 
 @login_required
 def miscursos(request):
-    cursos_asignados = LineaAsignacion.objects.all()
+    cursos_asignados = Notas.objects.all()
     asignaciones = Asignaciones.objects.all()
     listado_todas_asignaciones = Cursos.objects.all()
     listado_estudiantes= Estudiantes.objects.all()
@@ -79,14 +83,15 @@ class Registro(View):
         if form.is_valid():
             usuario = form.save()
             dpi = form.cleaned_data.get('dpi')
-            img = form.cleaned_data.get("profile_imagen")
+            img = form.cleaned_data.get("profile_image")
             telefono=form.cleaned_data.get("telefono")
             fecha_nacimiento=form.cleaned_data.get("fecha_nacimiento")
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
+
             usuario = authenticate(request=request, username=username, password=password)
             login(request, usuario)
-
+            
             nuevo_usuario = Estudiantes(user=request.user, 
                                      username=request.user.username, 
                                      first_name=request.user.first_name, 
@@ -133,19 +138,3 @@ class Registro(View):
             return render(request, "registro.html", {"form": form})
         
 
-
-# def registro(request):
-#     if request.method == 'POST':
-#         form = EstudianteRegistroForm(request.POST)
-#         if form.is_valid():
-#             estudiante = form.save()
-#             login(request, estudiante)  # Iniciar sesión automáticamente después del registro
-#             return redirect('registro_exitoso')  # Redirigir a la página de inicio o dashboard
-
-#     else:
-#         form = EstudianteRegistroForm()
-#     return render(request, 'registro.html', {'form': form})
-
-# def sesion(request):
-    
-    # return render(request, "sesion.html")

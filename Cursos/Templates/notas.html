@@ -1,0 +1,44 @@
+{% extends "Base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="container-fluid bg-light py-5">
+    <div class="col-md-6 m-auto text-center">
+        <h1 class="h1">{{ curso.nombre }}  / Notas</h1>
+    </div>
+</div>
+
+
+
+{% for cursos_asignados in cursos_asignados %}
+{% if cursos_asignados.user_id == user.id%}
+<section class="vh-100" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+
+                    {% for listado_todas_asignaciones in listado_todas_asignaciones %}
+                    {% if cursos_asignados.curso_id == listado_todas_asignaciones.id%}
+                        <p><strong>Nota 1: </strong>{{cursos_asignados.nota1}}</p> 
+                        <p><strong>Nota 2: </strong>{{cursos_asignados.nota2}}</p> 
+                        <p><strong>Nota 3: </strong>{{cursos_asignados.nota2}}</p> 
+                        <p><strong>Nota Final: </strong>{{cursos_asignados.nota_final}}</p> 
+                  
+                    <div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
+                        {% if cursos_asignados.nota_final >= 61 %}
+                        <a class="btn btn-success" href="{% url 'certificacion' id=listado_todas_asignaciones.codigo  %}">Generar Certificación</a>
+
+                    </div>
+                </section>                  
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        
+    {% endif %}
+    {% endfor %}
+
+
+</div>
+
+
+
+
+{% endblock %}

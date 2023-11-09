@@ -11,6 +11,8 @@ urlpatterns = [
     #path('curso-single/', views.curso_single, name="curso_single"),
     path('curso-single/<int:id>', views.curso_single, name="curso_single"),
     path('curso/<int:id>', views.curso_matriculado, name="entrar"),
+    path('curso/notas/<int:id>', views.notas, name="notas"),
+    path('curso/certificacion/<int:id>', views.generar_pdf, name='certificacion'),
     #Carrito
     path('carrito', views.carrito, name="carrito"),
     path('carrito/agregar/<int:curso_id>', views.agregar_curso, name="agregar"),

@@ -4,12 +4,20 @@ from django.contrib import messages
 from django.template.loader import render_to_string
 from django.utils.html import  strip_tags
 from django.core.mail import send_mail
-from Cursos.models import Cursos, Asignaciones, LineaAsignacion
+from Cursos.models import Cursos, Asignaciones, Notas
 from Cursos.carro import Carro
 from Usuarios.models import Estudiantes
 from django.conf import settings
-
-
+from django.shortcuts import render
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from io import BytesIO
+import os
+from datetime import datetime
 #-------------Catalogo de Cursos--------------------------
 
 def cursos_all(request):
@@ -28,6 +36,78 @@ def curso_matriculado(request, id):
     curso=Cursos.objects.get(codigo=id)
     
     return render(request, "curso_matriculado.html", {'curso':curso})
+
+@login_required
+def notas(request, id):
+    curso = Cursos.objects.get(codigo=id)
+    cursos_asignados = Notas.objects.all()
+    asignaciones = Asignaciones.objects.all()
+    listado_todas_asignaciones = Cursos.objects.all()
+    listado_estudiantes= Estudiantes.objects.all()
+    return render(request, "notas.html", {'curso': curso, "cursos_asignados":cursos_asignados, "listado_todas_asignaciones":listado_todas_asignaciones, 'listado_estudiantes': listado_estudiantes, 'asignaciones': asignaciones})
+
+
+
+
+
+@login_required
+def generar_pdf(request,id):
+    curso = Cursos.objects.get(codigo=id)
+    notas = Notas.objects.all()
+    asignaciones = Asignaciones.objects.all()
+    listado_todas_asignaciones = Cursos.objects.all()
+    listado_estudiantes= Estudiantes.objects.all()
+    styles = getSampleStyleSheet()  # Obtener estilos predefinidos
+
+    # Obtener la fecha actual
+    fecha_actual = datetime.now()
+    username = request.user.username
+
+    # Formatear la fecha como una cadena (solo día, mes y año)
+    fecha_formateada = fecha_actual.strftime("%Y-%m-%d")
+
+    # Crear un objeto BytesIO para almacenar el PDF
+    buffer = BytesIO()
+
+    # Crear un objeto PDF con reportlab
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+
+    # Lista para almacenar elementos del PDF
+    elements = []
+
+    # Agregar nombre de la Academia como título
+    elements.append(Paragraph("AcademiaUSAC", styles['Title']))
+
+    # Agregar título principal
+    elements.append(Paragraph("Certificación del Curso", styles['Title']))
+
+    # Agregar información del curso
+    elements.append(Paragraph(f'Nombre del Curso: {curso.nombre}', styles['Heading2']))
+
+    # Agregar texto personalizado
+    texto_certificado = """
+    Este certificado reconoce que el estudiante ha completado satisfactoriamente el curso y ha obtenido una nota
+    que demuestra su dedicación y comprensión de los contenidos impartidos.
+
+    Nombre del Estudiante: {}
+    Fecha de Certificación: {}
+    """.format(username, fecha_formateada)
+
+    elements.append(Spacer(1, 12))  # Agregar un espacio en blanco
+    elements.append(Paragraph(texto_certificado, styles['Normal']))
+
+    # Construir el PDF
+    doc.build(elements)
+
+    # Volver al principio del buffer
+    buffer.seek(0)
+
+    # Crear una respuesta HTTP con el contenido del PDF
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{curso.nombre}_certificado.pdf"'
+    response.write(buffer.read())
+
+    return response
 
 #-------------CARRITO---------------------------------------
 @login_required(login_url="/inicio-sesion/")
@@ -64,7 +144,7 @@ def procesar_asignacion(request):
     carro=Carro(request)
     lineas_asignaciones=[]
     for key, value in carro.carro.items():
-        lineas_asignaciones.append(LineaAsignacion(
+        lineas_asignaciones.append(Notas(
 
             curso_id=key,
             cupo=value["cupo"],
@@ -72,9 +152,8 @@ def procesar_asignacion(request):
             asignacion=asignacion
         ))
 
-    LineaAsignacion.objects.bulk_create(lineas_asignaciones)
-
-    cursos_asignados = LineaAsignacion.objects.all()
+    Notas.objects.bulk_create(lineas_asignaciones)
+    cursos_asignados = Notas.objects.all()
     asignaciones = Asignaciones.objects.all()
     listado_todas_asignaciones = Cursos.objects.all()
     listado_estudiantes= Estudiantes.objects.all()

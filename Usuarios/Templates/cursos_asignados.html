@@ -37,6 +37,7 @@
                         <p><strong>Catedratico: </strong>{{listado_todas_asignaciones.catedratico}}</p>      
                         <p><strong>Horario: </strong>{{listado_todas_asignaciones.horario}}</p> 
                         <a class="btn btn-success" href="{% url 'entrar' id=listado_todas_asignaciones.codigo %}">Entrar</a>
+                        <a class="btn btn-success" href="{% url 'notas' id=listado_todas_asignaciones.codigo %}">Notas</a>
                         {% endif %}
                         {% endfor %}
                         

@@ -13,7 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
     telefono=forms.CharField(max_length=8)
     fecha_nacimiento=forms.DateField()
     dpi = forms.IntegerField(label='DPI')
-    profile_imagen = forms.ImageField(label='Foto de perfil', required=False)  # Cambia required a False
+    profile_image = forms.ImageField(label='Foto de perfil')  # Cambia required a False
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")

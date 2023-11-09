@@ -27,7 +27,7 @@
 <!-- Start Registration Form -->
 <div class="container py-5">
     <div class="row py-5">
-        <form action="{% url 'registro' %}" class="col-md-9 m-auto" method="POST" role="form">
+        <form action="{% url 'registro' %}" class="col-md-9 m-auto" method="POST" enctype="multipart/form-data" role="form">
             {% csrf_token %}
             {{form|crispy}}
 

@@ -5,23 +5,18 @@
 
 <div class="container-fluid bg-light py-5">
     <div class="col-md-6 m-auto text-center">
-        <h1 class="h1">{{curso.nombre}}</h1>
+        <h1 class="h1">{{ curso.nombre }}</h1>
     </div>
 </div>
 
-<section class="vh-100" st>
-  <section class="vh-100" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
+<section class="vh-100" style="text-align: center; display: flex; flex-direction: column; justify-content: center;">
     <p style="font-size: 20px; color: #333; padding: 20px;">
-      Bienvenido al curso <span style="color: #007BFF; font-weight: bold;">{{ user.username }}</span>. Estamos emocionados de tenerte como estudiante en el curso de <strong style="color: #007BFF;">{{ curso.nombre }}</strong>
-   <br> 
-    El curso comenzará el mañana a las <span style="color: #007BFF; font-weight: bold;">{{ curso.horario }}</span>. Asegúrate de estar preparado para una emocionante experiencia de aprendizaje.
+        Bienvenido al curso <span style="color: #007BFF; font-weight: bold;">{{ user.username }}</span>. Estamos emocionados de tenerte como estudiante en el curso de <strong style="color: #007BFF;">{{ curso.nombre }}</strong>
+        <br> 
+        El curso comenzará mañana a las <span style="color: #007BFF; font-weight: bold;">{{ curso.horario }}</span>. Asegúrate de estar preparado para una emocionante experiencia de aprendizaje.
     </p>
-  </section>
 </section>
 
 
 
-<div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
-  ´<p> </p>
-</div>
 {% endblock %}

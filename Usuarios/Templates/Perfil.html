@@ -17,9 +17,9 @@
       <div class="row g-0">
         <div class="col-md-4 gradient-custom text-center text-white"
         style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-          {% for listado_usuarios in listado_usuarios%}
-          {% if listado_usuarios.user_id == user.id%}
-            <img src="{{user.imagen.url}}" alt="Avatar" class="img-fluid my-5" style="width: 80px;">
+          {% for listado_estudiantes in listado_estudiantes%}
+          {% if listado_estudiantes.user_id == user.id%}
+            <img src="{{listado_estudiantes.profile_image.url}}" alt="Avatar" class="img-fluid my-5" style="width: 800px;">
           {% else %}
             <!--<img src="/media/users_pictures/default.png" alt="Avatar" class="img-fluid my-5" style="width: 80px;">-->
           {% endif %}

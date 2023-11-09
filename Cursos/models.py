@@ -5,18 +5,6 @@ from django.db.models import F, Sum, FloatField
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-# class CategoriaCurso(models.Model):
-#     nombre=models.CharField(max_length=50)
-#     created=models.DateTimeField(auto_now_add=True)
-#     updated=models.DateTimeField(auto_now_add=True)
-
-#     class Meta:
-#         verbose_name="Categoria Curso"
-#         verbose_name_plural="Categorias de Cursos"
-
-#     def __str__(self):  
-#         return self.nombre
-
 #--------------CURSOS------------------------------
 class Cursos(models.Model):
     nombre = models.CharField(max_length=70, null=False, verbose_name='Nombre del Curso')               # Nombre del Curso
@@ -44,7 +32,7 @@ class Cursos(models.Model):
 
     def __str__(self):
         #return self.nombre_curso
-        return '%s %s / %s / %s / Q%s' %(self.codigo, self.nombre   , self.catedratico, self.horario, self.precio)
+        return '%s / %s / %s / %s / Q%s' %(self.codigo, self.nombre   , self.catedratico, self.horario, self.precio)
  
  #--------------ASIGNACIONES------------------------------
 class Asignaciones(models.Model):
@@ -66,12 +54,21 @@ class Asignaciones(models.Model):
         verbose_name_plural = 'Asignaciones'
         ordering=['id']
 
-class LineaAsignacion(models.Model):
+class Notas(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     curso=models.ForeignKey(Cursos, on_delete=models.CASCADE)
     asignacion=models.ForeignKey(Asignaciones, on_delete=models.CASCADE)
     cupo=models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
+    nota1 = models.DecimalField(max_digits=5, decimal_places=2, null=True, verbose_name='Nota 1')
+    nota2 = models.DecimalField(max_digits=5, decimal_places=2, null=True, verbose_name='Nota 2')
+    nota3 = models.DecimalField(max_digits=5, decimal_places=2, null=True, verbose_name='Nota 3')
+    nota_final = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name='Nota Final')
+
+    def save(self, *args, **kwargs):
+        self.nota_final = (self.nota1 + self.nota2 + self.nota3) / 3
+        super(Notas, self).save(*args, **kwargs)
+
 
     def __str__(self):
         return f"{self.cupo}"
@@ -80,9 +77,11 @@ class LineaAsignacion(models.Model):
     def total(self):
         pass
     class Meta:
-        db_table = 'LineaAsignaciones'
-        verbose_name='LineaAsignacion'
-        verbose_name_plural = 'LineaAsignaciones'
+        db_table = 'Notas'
+        verbose_name='Notas'
+        verbose_name_plural = 'Notas'
         ordering=['id']
+#-------NOTAS-----------------
+
 
 

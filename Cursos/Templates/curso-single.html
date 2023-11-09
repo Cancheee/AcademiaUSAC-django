@@ -27,20 +27,12 @@
                             <p><strong>Codigo: </strong>{{curso.codigo}}</p>
                             <p><strong>Catedratico: </strong>{{curso.catedratico}}</p>      
                             <p><strong>Horario: </strong>{{curso.horario}}</p>
-                            <p><strong>Cupo: </strong>{{curso.cupo}}</p> 
+                            <p><strong> </strong>{{curso.cupo}}</p> 
 
                             <form action="" method="GET">
                                 <input type="hidden" name="product-title" value="Activewear">
                                 <div class="row pb-3">
-                                    <div class="col d-grid">
-                                        {% if user.is_authenticated %}  
-                                        <div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
-                                            <a class="btn btn-success" href="{% url 'entrar' id=curso.codigo %}">Entrar</a>
-                                        </div>    
-                                        {% else %}
-                                        <a class="btn btn-success" href="{% url 'inicio-sesion' %}">Inicia Sesion para entrar</a>
-                                        {% endif %}  
-                                    </div>
+                                   
                                     <div class="col d-grid" >     
                                         {% if user.is_authenticated %}  
                                         <div class="text-center"> <!-- Agregamos este div para centrar el enlace -->
